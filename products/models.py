@@ -2,6 +2,7 @@ from django.db import models
 from taggit.managers import TaggableManager
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.utils.text import slugify
 
 FLAG_TYPES =(
     ('New','New'),
@@ -23,6 +24,13 @@ class Product(models.Model):
     tags = TaggableManager()
 
 
+    slug = models.SlugField(blank=True,null=True)
+
+    def save(self, *args, **kwargs):
+        self.slug =slugify(self.name)
+        super(Product).save(*args, **kwargs)
+
+
 
 class ProductImages(models.Model):
     product = models.ForeignKey(Product,related_name='product_image',on_delete=models.CASCADE)
@@ -33,6 +41,11 @@ class ProductImages(models.Model):
 class Brand(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='brand')
+    slug = models.SlugField(blank=True,null=True)
+
+    def save(self, *args, **kwargs):
+        self.slug =slugify(self.name)
+        super(Product).save(*args, **kwargs)
 
 
 class Review(models.Model):
