@@ -14,6 +14,10 @@ class ProductListAPI(generics.ListAPIView):
     search_fields = ['name','subtitle','description']
     ordering_fields = ['price']
 
+
+
+
+
 class ProductDetailAPI(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = serializers.ProductDetailSerializer
