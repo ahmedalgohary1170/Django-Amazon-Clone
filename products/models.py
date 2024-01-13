@@ -40,12 +40,12 @@ class Product(models.Model):
 
 
 
-
+    @property
     def review_count(self):
         review= self.Review_product.all().count()
         return review
     
-
+    @property
     def avg_rate (self):
         total = 0
         reviews = self.Review_product.all()
