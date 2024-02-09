@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.views.generic import ListView,DetailView
 from .models import Product,Brand,Review,ProductImages
 
@@ -52,5 +52,20 @@ class BrandDetail(ListView):
         context = super().get_context_data(**kwargs)
         context["brand"] = Brand.objects.filter(slug=self.kwargs['slug']).annotate(product_count=Count('Product_brand'))[0]
         return context
+
+
+def add_review(request,slug):
+    product = Product.objects.get(slug=slug)
+    review = request.POST['review'] 
+    rate = request.POST['rating']
     
-    
+    # add review
+
+    Review.objects.create(
+        user = request.user,
+        product = product,
+        review = review,
+        rate = rate
+    )
+    # return product datail
+    return redirect(f'/products/{slug}')
