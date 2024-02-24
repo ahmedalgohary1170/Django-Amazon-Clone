@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     # your apps
     'products',
     'settings',
+    'orders',
+    'accounts',
 ]
 #restapi
 REST_FRAMEWORK = {
