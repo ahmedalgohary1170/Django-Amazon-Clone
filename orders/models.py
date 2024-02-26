@@ -26,7 +26,7 @@ class Order(models.Model):
     delivary_time = models.DateTimeField(blank=True, null=True)
     delivary_address = models.ForeignKey(Address,related_name='delivary_address',on_delete=models.SET_NULL,blank=True, null=True)
     coupon = models.ForeignKey('Coupon',related_name='order_coupon',on_delete=models.SET_NULL,blank=True, null=True)
-    total = models.FloatField()
+    total = models.FloatField(blank=True, null=True)
     total_with_coupon = models.FloatField(blank=True, null=True)
 
 class OrderDetail(models.Model):
@@ -34,7 +34,7 @@ class OrderDetail(models.Model):
     product = models.ForeignKey(Product,related_name = 'orderdetail_product',on_delete = models.SET_NULL,blank=True, null=True)
     quantity = models.IntegerField()
     price = models.FloatField()
-    total = models.FloatField()
+    total = models.FloatField(blank=True, null=True)
 
 
 
