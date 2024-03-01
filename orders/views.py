@@ -30,7 +30,9 @@ def checkout(request):
                 cart.coupon = coupon
                 cart.total_with_coupon = sub_total
                 cart.save()
-
+                coupon.quantity -= 1
+                coupon.save()
+                
                 return render(request,'orders/checkout.html',{
                     'cart_detail':cart_detail,
                     'deliveryFee':deliveryFee,
