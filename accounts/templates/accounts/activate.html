@@ -1,5 +1,47 @@
-<form method="post">
+{% extends "auth_base.html" %}
+{% comment %} <form method="post">
     {% csrf_token %}
     {{form}}
     <input type="submit" value="activate">
-</form>
+</form> {% endcomment %}
+
+{% load django_bootstrap5 %}
+
+{% block bady %}
+
+        <section class="user-form-part">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-sm-10 col-md-12 col-lg-12 col-xl-10">
+                        <div class="user-form-logo">
+                            <a href="index.html"><img src="{{settings_date.logo.url}}" alt="logo"></a>
+                        </div>
+                        <div class="user-form-card">
+                            <div class="user-form-title">
+                                <h2>welcome!</h2>
+                                <p>Use your credentials to access</p>
+                            </div>
+                            <div class="user-form-group">
+                               
+                                <form class="user-form" method="post" action="{% url 'login' %}">
+                                    {% csrf_token %}
+                                    {% bootstrap_form form %}
+                                    <div class="form-button">
+                                        
+                                        {% bootstrap_button button_type="submit" content="Login" %}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="user-form-remind">
+                            <p>Don't have any account?<a href="/accounts/singup">register here</a></p>
+                        </div>
+                        <div class="user-form-footer">
+                            <p>Greeny | &COPY; Copyright by <a href="/">"{{settings_date.name}}"</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock bady %}

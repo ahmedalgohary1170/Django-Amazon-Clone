@@ -83,8 +83,8 @@ class CreateOrderAPI(generics.GenericAPIView):
         for item in cart_detail:
             product = Product.objects.get(id=item.product.id)
             OrderDetail.objects.create(
-                order = product,
-                product = item.product,
+                order = new_order,
+                product = product,
                 quantity = item.quantity,
                 price = product.price,
                 total = round(item.quantity * product.price,2),
@@ -99,7 +99,7 @@ class CreateOrderAPI(generics.GenericAPIView):
             return Response({'massage':'order was created successfully'},status=status.HTTP_201_CREATED)
 
 class CartCreateUpdateDelete(generics.GenericAPIView):
-    def get(request,self,*args, **kwargs):
+    def get(self,request,*args, **kwargs):
         user = User.objects.get(username=self.kwargs['username'])
         
         cart , created = Cart.objects.get_or_create(user=user,status='Inprogress')
@@ -110,7 +110,7 @@ class CartCreateUpdateDelete(generics.GenericAPIView):
 
 
 
-    def post(request,self,*args, **kwargs):
+    def post(self,request,*args, **kwargs):
 
         user = User.objects.get(username=self.kwargs['username'])
         product = Product.objects.get(id=request.data['product_id'])
@@ -127,7 +127,7 @@ class CartCreateUpdateDelete(generics.GenericAPIView):
 
 
 
-    def delete(request,self,*args, **kwargs):
+    def delete(self,request,*args, **kwargs):
         user = User.objects.get(username=self.kwargs['username'])
 
         product = CartDetail.objects.get(id=request.data['item_id'])
