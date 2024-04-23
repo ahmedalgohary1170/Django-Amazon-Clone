@@ -364,7 +364,7 @@
                             
                             
                                 <div class="col">
-                                    <div class="product-card">
+                                    <div class="product-card {% if object.quantity == 0 %}product-disable{% endif %}">
                                         <div class="product-media">
                                             <div class="product-label">
                                                 <label class="label-text new">{{object.flag}}</label>
