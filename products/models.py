@@ -23,7 +23,7 @@ class Product(models.Model):
     subtitle = models.TextField(_('subtitle'),max_length=500)
     description = models.TextField(_('description'),max_length=50000)
     brand = models.ForeignKey('Brand',verbose_name=_('brand'),related_name='Product_brand',on_delete=models.SET_NULL,null=True)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(_('quantity'))
     tags = TaggableManager()
 
 

@@ -86,6 +86,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -163,9 +164,6 @@ LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
-
-USE_L10N = True
-
 USE_TZ = True
 
 
@@ -198,7 +196,11 @@ AUTHENTICATION_BACKENDS= [
 ]
 
 # translate
-LOCALE_PATH = ['locale']
+LOCALE_PATHS = ['locale']
+LANGUAGES = [
+    ("ar",("Arabic")),
+    ("en",("English")),
+]
 
 
 LOGIN_REDIRECT_URL = '/'
