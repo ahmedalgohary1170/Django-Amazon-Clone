@@ -34,7 +34,8 @@ def seed_products(n):
             sku = random.randint(100,1000000),
             subtitle = fake.text(max_nb_chars=450),
             description = fake.text(max_nb_chars=4000),
-            brand = brands[random.randint(0,len(brands)-1)]
+            brand = brands[random.randint(0,len(brands)-1)],
+            quantity = 1,
 
 
         )
@@ -47,5 +48,5 @@ def seed_reviws(n):
     pass
 
 
-# seed_brand(200)
+seed_brand(200)
 seed_products(1500)
