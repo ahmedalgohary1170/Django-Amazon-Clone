@@ -25,8 +25,6 @@ class Product(models.Model):
     brand = models.ForeignKey('Brand',verbose_name=_('brand'),related_name='Product_brand',on_delete=models.SET_NULL,null=True)
     quantity = models.IntegerField(_('quantity'))
     tags = TaggableManager()
-
-
     slug = models.SlugField(blank=True,null=True,unique=True)
 
 
