@@ -144,10 +144,10 @@
                     </a>
                     <a href="login.html" class="header-widget" title="My Account">
                         {% if user.is_authenticated %}
-                            <img src="images/user.png" alt="user">
+                            <img src="{{settings_date.logo.url}}" alt="user">
                         {% else %}
-                            <a href="#">login </a>
-                            <a href="#"> signup </a>
+                            <a href="/accounts/login/"> login  </a>
+                            <a href="/accounts/singup">  signup  </a>
                         {% endif %}
                     </a>
 

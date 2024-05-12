@@ -1,15 +1,16 @@
 from django.shortcuts import render , redirect
 from django.views.generic import ListView,DetailView
 from .models import Product,Brand,Review,ProductImages
-
+from .tasks import execute_somthing
 from django.db.models.aggregates import Count
 from django.views.decorators.cache import cache_page
 
 
 @cache_page( 60 * 1 )
 def mydebug(request):
-    data = Product.objects.all()
-    return render(request,'products/debug.html',{'data':data})
+    # data = Product.objects.all()
+    execute_somthing.delay()
+    return render(request,'products/debug.html',{})
 
 
 
