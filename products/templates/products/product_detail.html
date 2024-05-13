@@ -316,6 +316,8 @@
                         dataType: 'json',
                         success:function (response){
                             $('#cartsidebar').html(response["result"])
+                            $('#cartTotal').text(response['total'])
+                            $('#cartCoun').text(response['cart_count'])
 
                         },
                         error:function(){
