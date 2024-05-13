@@ -2,9 +2,17 @@ from django.shortcuts import render,redirect
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 import datetime
+
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+
 from .models import Order,OrderDetail,Cart,CartDetail,Coupon
 from products.models import Product
 from settings.models import DeliveryFee
+
+
+
+
 def order_list(request):
     data = Order.objects.filter(user=request.user)
     return render(request,'orders/order_list.html',{'orders':data})
@@ -68,4 +76,9 @@ def add_to_cart(request):
     cart_detail.total = round(product.price * cart_detail.quantity,2)
     cart_detail.save()
 
-    return redirect(f'/products/{product.slug}')
+
+
+    cart = Cart.objects.get(user=request.user,status='Inprogress')
+    cart_detail = CartDetail.objects.filter(cart=cart)
+    page= render_to_string('cart_includes.html',{'cart_detail_data':cart_detail,'cart_data':cart})
+    return JsonResponse({'result':page})
