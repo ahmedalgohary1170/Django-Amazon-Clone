@@ -72,33 +72,17 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="chekout-coupon">
+                                <div class="chekout-coupon" '>
                                     <button class="coupon-btn">Do you have a coupon code?</button>
-                                    <form class="coupon-form" method ='post'>
+                                    <form class="coupon-form" method ='post' id='couponForm'>
                                         {% csrf_token %}
                                         <input type="text" name='coupon_code' placeholder="Enter your coupon code">
                                         <button type="submit"><span>apply</span></button>
                                     </form>
+                                   
                                 </div>
-                                <div class="checkout-charge">
-                                    <ul>
-                                        <li>
-                                            <span>Sub total</span>
-                                            <span>${{sub_total}}</span>
-                                        </li>
-                                        <li>
-                                            <span>delivery fee</span>
-                                            <span>${{deliveryFee}}</span>
-                                        </li>
-                                        <li>
-                                            <span>discount</span>
-                                            <span>${{discount}}</span>
-                                        </li>
-                                        <li>
-                                            <span>Total<small>(Incl. VAT)</small></span>
-                                            <span>${{total}}</span>
-                                        </li>
-                                    </ul>
+                                <div id='couponApply' class="checkout-charge">
+                                    {% include 'includes/coupon.html' %}
                                 </div>
                             </div>
                         </div>
@@ -428,6 +412,39 @@
         <!--=====================================
                     MODAL EDIT FORM END
         =======================================-->
+
+
+                    
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        
+        <script>
+            $(document).ready(function(){
+                // add reviews
+                $(document).on('submit','#couponForm',function(event){
+
+                    event.preventDefault()
+
+                    $.ajax({
+                        type: $(this).attr('method'),
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        dataType: 'json',
+                        success:function (response){
+                            $('#couponApply').html(response["result"])
+                            $('#couponForm').trigger("reset")
+
+                        },
+                        error:function(){
+
+                        }
+                    })
+
+
+                })
+            })
+     
+
+    </script>
 
         {% endblock bady %}
 

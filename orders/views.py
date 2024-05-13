@@ -41,15 +41,27 @@ def checkout(request):
                 cart.save()
                 coupon.quantity -= 1
                 coupon.save()
-                
-                return render(request,'orders/checkout.html',{
-                    'cart_detail':cart_detail,
-                    'deliveryFee':deliveryFee,
-                    'sub_total':sub_total,
-                    'discount':coupon_value,
-                    'total':total,
 
-                })
+                deliveryFee = DeliveryFee.objects.last().fee
+                cart_detail = CartDetail.objects.filter(cart=cart)
+                sub_total = cart.cart_total - coupon_value
+                total = sub_total + deliveryFee
+                coupon_value = round(cart.cart_total / 100*coupon.descount,2)
+
+
+
+                page= render_to_string('includes/coupon.html',{'sub_total':sub_total ,'deliveryFee':deliveryFee ,'discount':coupon_value,'total':total})
+                return JsonResponse({'result':page})
+            
+
+                # return render(request,'orders/checkout.html',{
+                #     'cart_detail':cart_detail,
+                #     'deliveryFee':deliveryFee,
+                #     'sub_total':sub_total,
+                #     'discount':coupon_value,
+                #     'total':total,
+
+                # })
 
 
     sub_total = cart.cart_total
