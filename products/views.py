@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_page
 
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.db.models import Q
 
 
 @cache_page( 60 * 1 )
@@ -21,6 +22,24 @@ def mydebug(request):
 class ProductList(ListView):
     model=Product
     paginate_by = 50
+
+    def get_queryset(self):
+        # الحصول على قيمة السعر من طلب HTTP
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
+
+        # فلترة المنتجات حسب السعر
+        if min_price and max_price:
+            products = self.model.objects.filter(Q(price__gte=min_price) & Q(price__lte=max_price))
+        elif min_price:
+            products = self.model.objects.filter(price__gte=min_price)
+        elif max_price:
+            products = self.model.objects.filter(price__lte=max_price)
+        else:
+            products = self.model.objects.all()
+
+        return products
+
 
 
 
